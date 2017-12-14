@@ -16,7 +16,7 @@
      }
 
     &__icon {
-         display: block;
+         display: inline-block;
          margin-right: auto;
          margin-left: auto;
          margin-bottom: .6rem;
