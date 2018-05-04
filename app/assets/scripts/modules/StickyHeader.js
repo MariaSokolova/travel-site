@@ -1,5 +1,6 @@
 import $ from "jquery";
 import waypoints from '../../../../node_modules/waypoints/lib/noframework.waypoints';
+import smoothScroll from '../../../../node_modules/jquery-smooth-scroll';
 
 
 class StickyHeader {
@@ -8,7 +9,13 @@ class StickyHeader {
     this.headerTriggerElement = $(".large-hero__title");
     this.creatHeaderWaypoint();
     this.pageSections = $(".page-section");
+    this.headerLinks = $(".primary-nav a");
     this.createPageSectionWaypoints();
+    this.addSmoothScrolling();
+  }
+
+  addSmoothScrolling(){
+      this.headerLinks.smoothScroll();
   }
 
   creatHeaderWaypoint() {
@@ -26,15 +33,32 @@ class StickyHeader {
   }
 
   createPageSectionWaypoints(){
+    let that = this;
     this.pageSections.each(function () {
       let currentPageSection = this;
       new Waypoint({
         element: currentPageSection,
-        handler: function () {
-          let matchingHeaderLink = currentPageSection.getAttribute("data-matching-link");
-          $(matchingHeaderLink).addClass("is-current-link");
-        }
+        handler: function (direction) {
+          if (direction === "down"){
+              let matchingHeaderLink = currentPageSection.getAttribute("data-matching-link");
+              that.headerLinks.removeClass("is-current-link");
+              $(matchingHeaderLink).addClass("is-current-link");
+          }
+        },
+          offset: "18%"
       });
+
+        new Waypoint({
+            element: currentPageSection,
+            handler: function (direction) {
+                if (direction === "up"){
+                    let matchingHeaderLink = currentPageSection.getAttribute("data-matching-link");
+                    that.headerLinks.removeClass("is-current-link");
+                    $(matchingHeaderLink).addClass("is-current-link");
+                }
+            },
+            offset: "-40%"
+        });
     });
   }
 }
