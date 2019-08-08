@@ -1,6 +1,6 @@
 # travel-site
 
-To run project use command:
+To run the project use command:
 ```
 gulp watch
 ```
